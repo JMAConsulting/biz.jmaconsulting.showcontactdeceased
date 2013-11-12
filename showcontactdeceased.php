@@ -90,3 +90,19 @@ function showcontactdeceased_civicrm_pageRun(&$page) {
     }
   }
 }
+
+/**
+ * Implementation of hook_civicrm_buildForm
+ *
+ * Add 'deceased' to the name at the top of the contact edit form
+ * for all contacts with Deceased set true
+ * 
+ */
+function showcontactdeceased_civicrm_buildForm($formName, &$form) {
+  if ($formName == 'CRM_Contact_Form_Contact' && $form->getVar('_action') == CRM_Core_Action::UPDATE) {
+    $deceased = CRM_Utils_Array::value('is_deceased', $form->_values);
+    if ($deceased) {
+      CRM_Utils_System::setTitle(CRM_Utils_Array::value('display_name', $form->_values) . ' <span style= "color:red">(deceased)</span>');
+    }
+  }
+}

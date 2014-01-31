@@ -78,13 +78,13 @@ function showcontactdeceased_civicrm_managed(&$entities) {
  */
 function showcontactdeceased_civicrm_pageRun(&$page) {
   if (in_array($page->getVar('_name'), array('CRM_Contact_Page_View_Summary', 'CRM_Contact_Page_Inline_ContactName'))) {
-    $isDeceased = $page->get_template_vars('is_deceased');
+    $isDeceased = CRM_Core_Smarty::singleton()->get_template_vars('is_deceased');
     if (!$isDeceased && $page->getVar('_name') == 'CRM_Contact_Page_Inline_ContactName') {
-      $contactId = $page->get_template_vars('contactId');
+      $contactId = CRM_Core_Smarty::singleton()->get_template_vars('contactId');
       $isDeceased = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $contactId, 'is_deceased');
     }
     if ($isDeceased) {
-      $title = $page->get_template_vars('title');
+      $title = CRM_Core_Smarty::singleton()->get_template_vars('title');
       $title .= ' <span class= "font-red">(deceased)</span>';
       $page->assign('title', $title);
     }
